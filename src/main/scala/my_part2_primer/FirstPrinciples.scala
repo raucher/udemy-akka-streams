@@ -34,11 +34,6 @@ object FirstPrinciples extends App {
   source.to(sinkWithFlow).run()
   source via flow to sink run
 
-  system.terminate().onComplete {
-    case Success(_) => println("Bye!")
-    case Failure(exception) =>
-  }
-
   // Sources
   val emptySource = Source.empty[Int]
   val singleSource = Source.single(357)
@@ -57,5 +52,14 @@ object FirstPrinciples extends App {
   val filterFlow = Flow[Int].filter(_ % 2 == 0)
   // except .flatMap, we can't resolve streams from stream, but should have sub-streams in such a situation
   // Basically: Source -> Flow -> Flow -> ... -> Sink
-  
+
+  // Shortcuts
+  // source via flow via flow to sink
+  Source(1 to 10).filter(_ % 2 == 0).map(_ * 3).runForeach(println)
+
+  // Terminate the system
+  system.terminate().onComplete {
+    case Success(_) => println("Bye!")
+    case Failure(exception) =>
+  }
 }
