@@ -57,6 +57,17 @@ object FirstPrinciples extends App {
   // source via flow via flow to sink
   Source(1 to 10).filter(_ % 2 == 0).map(_ * 3).runForeach(println)
 
+  /**
+   * Exercise:
+   *  Keep first 2 name with length greater then 5 chars
+   */
+  Source(List("bob", "ozzy", "bo", "giulia", "helen", "wolfgang"))
+    .filter(_.length > 5)
+    .take(2)
+    .map(_.capitalize)
+    .runForeach(println) // Giulia, Wolfgang
+
+
   // Terminate the system
   system.terminate().onComplete {
     case Success(_) => println("Bye!")
