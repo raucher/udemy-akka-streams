@@ -61,11 +61,14 @@ object FirstPrinciples extends App {
    * Exercise:
    *  Keep first 2 name with length greater then 5 chars
    */
-  Source(List("bob", "ozzy", "bo", "giulia", "helen", "wolfgang"))
+  val nameGraph = Source(List("bob", "ozzy", "bo", "giulia", "helen", "wolfgang"))
     .filter(_.length > 5)
     .take(2)
     .map(_.capitalize)
-    .runForeach(println) // Giulia, Wolfgang
+    .to(Sink.foreach[String](println))
+
+    nameGraph.run() // Giulia, Wolfgang
+    nameGraph.run() // Giulia, Wolfgang
 
 
   // Terminate the system
