@@ -47,4 +47,10 @@ object FirstPrinciples extends App {
   val fromFutureSource = Source.fromFuture(Future(759))
 
   // Sinks
+  val ignoreSink = Sink.ignore
+  val foreachSink = Sink.foreach[Int](println)
+  val headSink = Sink.head[Int]
+  val foldSink = Sink.fold[Int, Int](0)((a, b) => a + b)
+
+  // Folds
 }
